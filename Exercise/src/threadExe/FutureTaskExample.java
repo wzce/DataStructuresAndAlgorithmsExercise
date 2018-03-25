@@ -18,12 +18,12 @@ import java.util.concurrent.*;
     @Override
     public Integer call() throws Exception {
 
-        Thread.sleep(2000);
         for(int i=from ;i<to;i++){
+            Thread.sleep(1000);
             sum=sum+i;
             System.out.println("线程 ："+Thread.currentThread().getName()+"  sum: "+sum);
         }
-
+        System.out.println("线程 ："+Thread.currentThread().getName()+"  结束 ");
         return sum;
     }
 }
@@ -33,9 +33,9 @@ public class FutureTaskExample {
         //创建线程池
         ExecutorService es = Executors.newCachedThreadPool();
         //创建Callable对象任务
-        CallableDemo calTask1=new CallableDemo(1,10000);
-        CallableDemo calTask2=new CallableDemo(10001,20000);
-        CallableDemo calTask3=new CallableDemo(20001,32000);
+        CallableDemo calTask1=new CallableDemo(1,50);
+        CallableDemo calTask2=new CallableDemo(51,100);
+        CallableDemo calTask3=new CallableDemo(101,150);
         //提交任务并获取执行结果
         Future<Integer> future3=es.submit(calTask3);
         Future<Integer> future =es.submit(calTask1);
@@ -53,9 +53,17 @@ public class FutureTaskExample {
 //            System.out.println("已经完成 求的和："+(n1+future2.get()));
 //        }
             try {
+                System.out.println(" f3 开始阻塞-------------------------------------------------");
                 int n1=future3.get();
-                System.out.println(" f3 已经阻塞-------------------------------------------------");
-                System.out.println("get 求的和："+(n1+future.get()+future2.get()));
+                System.out.println(" f3 已经阻塞结束-------------------------------------------------");
+                System.out.println(" f2 开始阻塞-------------------------------------------------");
+                int n2=future2.get();
+                System.out.println(" f2 已经阻塞结束-------------------------------------------------");
+
+                System.out.println(" f1 开始阻塞-------------------------------------------------");
+                int n3=future.get();
+                System.out.println(" f1 已经阻塞结束-------------------------------------------------");
+                System.out.println("get 求的和："+((n1+n2+n3)));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (ExecutionException e) {

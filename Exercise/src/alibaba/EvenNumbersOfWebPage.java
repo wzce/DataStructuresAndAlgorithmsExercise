@@ -26,7 +26,7 @@ public class EvenNumbersOfWebPage extends Thread{
             String url=baseUrl+date+"/"+i+".htm";
             try {
                 //模拟真实环境的去网页上爬虫,假设消耗1s
-                Thread.sleep(1000);
+                Thread.sleep(10);
 //
                 result=rand.nextInt(9000)+1000;
             } catch (InterruptedException e) {
@@ -36,7 +36,7 @@ public class EvenNumbersOfWebPage extends Thread{
             if(result%2==0){
                 evenNumbers++;
             }
-             System.out.println("thread name: "+Thread.currentThread().getName()+" sum: "+evenNumbers);
+            // System.out.println("thread name: "+Thread.currentThread().getName()+" sum: "+evenNumbers);
         }
     }
 
